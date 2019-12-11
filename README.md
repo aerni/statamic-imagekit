@@ -4,6 +4,8 @@
 ## Getting Started
 To get started and for a list of available options, read the docs on the [Statamic Marketplace](https://statamic.com/marketplace/addons/imagekit/v1/docs) and get familiar with the [ImageKit API](https://docs.imagekit.io/features/image-transformations)
 
+***
+
 ## Basic Usage
 We have an asset URL saved in the YAML and want to resize the image to 300x200.
 
