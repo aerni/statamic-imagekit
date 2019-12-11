@@ -1,4 +1,4 @@
-# Statamic ImageKit ![Statamic](https://img.shields.io/badge/statamic-2.10-blue.svg?style=flat-square)
+# ImageKit ![Statamic](https://img.shields.io/badge/statamic-2.10-blue.svg?style=flat-square)
 > Statamic ImageKit provides an easy way to generate ImageKit URLs using a new `{{ imagekit }}` tag.
 
 ## Getting Started
