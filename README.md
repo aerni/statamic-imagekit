@@ -1,5 +1,5 @@
 # ImageKit ![Statamic](https://img.shields.io/badge/statamic-2.10-blue.svg?style=flat-square)
-> Statamic ImageKit provides an easy way to generate ImageKit URLs using a new `{{ imagekit }}` tag.
+> ImageKit provides an easy way to generate ImageKit URLs using a new `{{ imagekit }}` tag.
 
 ## Getting Started
 To get started and for a list of available options, read the docs on the [Statamic Marketplace](https://statamic.com/marketplace/addons/imagekit/v1/docs) and get familiar with the [ImageKit API](https://docs.imagekit.io/features/image-transformations)
