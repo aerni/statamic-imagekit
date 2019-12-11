@@ -1,0 +1,8 @@
+fields:
+  domain:
+    type: text
+    validate: required
+  id:
+    type: text
+  identifier:
+    type: text
