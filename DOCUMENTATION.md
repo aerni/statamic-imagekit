@@ -29,10 +29,10 @@ image: /assets/starwars/mandalorian.jpg
 ```
 
 ```template
-{{ imagekit :src="image" w="300" h="200" }}
+{{ image_kit :src="image" w="300" h="200" }}
 
 <!-- Use the nicer shorthand syntax: -->
-{{ imagekit:image w="300" h="200" }}
+{{ image_kit:image w="300" h="200" }}
 ```
 
 ```output
@@ -50,7 +50,7 @@ images:
 
 ```template
 {{ images }}
-  {{ imagekit:value w="300" h="200" }}
+  {{ image_kit:value w="300" h="200" }}
 {{ /images }}
 ```
 
@@ -66,7 +66,7 @@ Pass the following parameters to generate the respective HTML attribute.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `src` | String | The URL of the image. You can also use the shorthand syntax instead, e.g. `{{ imagekit:image }}`. |
+| `src` | String | The URL of the image. You can also use the shorthand syntax instead, e.g. `{{ image_kit:image }}`. |
 | `tag` | Boolean | When set to `true`, this will output an `<img>` tag with the URL in the `src` attribute. |
 | `alt` | String | When using the `tag` parameter, this will insert the given text into the `alt` attribute. |
 | `title` | String | When using the `tag` parameter, this will insert the given text into the `title` attribute. |
@@ -86,7 +86,7 @@ You may want to override the default addon settings for a specific image. You ca
 ***
 
 ## ImageKit Parameters
-You may pass any transformation parameters straight from the [ImageKit API](https://docs.imagekit.io/features/image-transformations). For example, `{{ imagekit:image w="300" }}` will use the width transformation parameter. There’s only a few parameters that are not supported by this addon.
+You may pass any transformation parameters straight from the [ImageKit API](https://docs.imagekit.io/features/image-transformations). For example, `{{ image_kit:image w="300" }}` will use the width transformation parameter. There’s only a few parameters that are not supported by this addon.
 
 | Category | Supported Parameters | Unsupported Parameters |
 |----------|----------------------|------------------------|
@@ -96,7 +96,7 @@ You may pass any transformation parameters straight from the [ImageKit API](http
 | [Other transformations](https://docs.imagekit.io/features/image-transformations/others-transformations) | `cp` `md` `rt` `r` `bg` | `orig` |
 
 ## Chained Transformations
-You can take advantage of [Chained Transformations](https://docs.imagekit.io/features/image-transformations/chained-transformations) by adding a `:` at the end of a given parameter. For example, `{{ imagekit:image w="300" h="200:" rt="90"}}` will first resize the image to 300x200 and then apply a rotation of 90 degrees.
+You can take advantage of [Chained Transformations](https://docs.imagekit.io/features/image-transformations/chained-transformations) by adding a `:` at the end of a given parameter. For example, `{{ image_kit:image w="300" h="200:" rt="90"}}` will first resize the image to 300x200 and then apply a rotation of 90 degrees.
 
 ***
 
@@ -105,7 +105,7 @@ If you’re using lazySizes to lazyload images, chances are you’re using the [
 
 
 ```template
-{{ imagekit:image w="auto" q="auto" }}
+{{ image_kit:image w="auto" q="auto" }}
 ```
 
 ```output
