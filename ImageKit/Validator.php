@@ -1,6 +1,6 @@
 <?php
 
-namespace Statamic\Addons\ImageKit;
+namespace Statamic\Addons\Imagekit;
 
 use Exception;
 use Statamic\API\Str;

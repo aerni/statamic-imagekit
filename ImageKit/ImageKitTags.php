@@ -1,11 +1,11 @@
 <?php
 
-namespace Statamic\Addons\ImageKit;
+namespace Statamic\Addons\Imagekit;
 
 use Statamic\Extend\Tags;
-use Statamic\Addons\ImageKit\Validator;
+use Statamic\Addons\Imagekit\Validator;
 
-class ImageKitTags extends Tags
+class ImagekitTags extends Tags
 {
     /**
      * Supported ImageKit API parameters
