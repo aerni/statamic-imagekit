@@ -13,8 +13,8 @@ class ImagekitTags extends Tags
      * @var array
      */
     private $imagekitApi = [
-        'w', 'h', 'ar', 'c', 'cm', 'fo', 'q', 'f', 'bl', 'dpr', 'n', 'pr', 'lo', 't', 
-        'e-contrast', 'e-sharpen', 'e-usm', 'e-grayscale', 'cp', 'md', 'rt', 'r', 'bg'
+        'w', 'h', 'ar', 'c', 'cm', 'fo', 'q', 'f', 'bl', 'dpr', 'n', 'pr', 'lo', 't',
+        'e-contrast', 'e-sharpen', 'e-usm', 'e-grayscale', 'cp', 'md', 'rt', 'r', 'bg', 'orig'
     ];
 
     /**
@@ -93,7 +93,7 @@ class ImagekitTags extends Tags
         ];
 
         $url = implode('/', array_filter($urlParts));
-        
+
         return $url;
     }
 
@@ -160,7 +160,7 @@ class ImagekitTags extends Tags
     private function normalizeImagekitParams($imagekitParams)
     {
 
-        if (! empty($imagekitParams)) {
+        if (!empty($imagekitParams)) {
 
             foreach ($imagekitParams as $param => $value) {
 
@@ -178,15 +178,13 @@ class ImagekitTags extends Tags
                 // For use with lazysizes rias plugin
                 if ($param === 'w' && $value === 'auto') {
                     $imagekitParams['w'] = '{width}';
-                } 
+                }
 
                 // For use with lazysizes rias plugin
                 if ($param === 'q' && $value === 'auto') {
                     $imagekitParams['q'] = '{quality}';
                 }
-
             }
-
         }
 
         return $imagekitParams;
@@ -197,7 +195,8 @@ class ImagekitTags extends Tags
      *
      * @return string
      */
-    private function buildImagekitTransformation() {
+    private function buildImagekitTransformation()
+    {
         $params = $this->getImagekitParams();
         $paramPairs = [];
 
@@ -210,7 +209,7 @@ class ImagekitTags extends Tags
                 }
             }
         }
-        
+
         $joinedParams = join(',', $paramPairs);
 
         $transformation = empty($joinedParams) ? '' : 'tr:' . $joinedParams;
