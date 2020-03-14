@@ -117,9 +117,50 @@ class ImagekitTags extends Tags
      */
     private function buildImagekitEndpoint(): string
     {
-        $endpoint = 'https://' . implode('/', array_filter($this->config));
+        $endpointConfig = $this->getConfig();
+
+        $endpoint = 'https://' . implode('/', array_filter($endpointConfig));
 
         return $endpoint;
+    }
+
+    /**
+     * Get the config from the tag
+     *
+     * @return array
+     */
+    private function getConfig(): array
+    {
+        $config = [
+            'domain' => $this->params->get('domain'),
+            'id' => $this->params->get('id'),
+            'identifier' => $this->params->get('identifier')
+        ];
+
+        $config = $this->mergeConfig($config);
+
+        Validator::validateConfig($config);
+
+        return $config;
+    }
+
+    /**
+     * Merge the addon config with the config provided on the tag
+     *
+     * @return array
+     */
+    private function mergeConfig(array $config): array
+    {
+        $defaultConfig = collect(array_filter($this->config));
+        $tagConfig = collect($config);
+
+        $validTagConfig = $tagConfig->filter(function ($value) {
+            return $value !== null;
+        });
+
+        $mergedConfig = $defaultConfig->merge($validTagConfig)->toArray();
+
+        return $mergedConfig;
     }
 
     /**
