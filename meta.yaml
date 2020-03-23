@@ -1,5 +1,5 @@
 name: ImageKit
-version: '1.0.1'
+version: '1.1.0'
 description: 'Easily generate ImageKit URLs'
 url: 'https://github.com/aerni/statamic-imagekit'
 developer: 'Michael Aerni'
