@@ -90,7 +90,7 @@ You may pass any transformation parameters straight from the [ImageKit API](http
 
 | Category | Supported Parameters | Unsupported Parameters |
 |----------|----------------------|------------------------|
-| [Resize, crop and other common transformations](https://docs.imagekit.io/features/image-transformations/resize-crop-and-other-transformations) | `w` `h` `ar` `c` `cm` `fo` `q` `f` `bl` `e-grayscale` `dpr` `n` `pr` `lo` `t` `cp` `md` `rt` `r` `bg` `orig` | `di` `b` |
+| [Resize, crop and other common transformations](https://docs.imagekit.io/features/image-transformations/resize-crop-and-other-transformations) | `w` `h` `ar` `c` `cm` `fo` `q` `f` `bl` `e-grayscale` `dpr` `n` `pr` `lo` `t` `b` `cp` `md` `rt` `r` `bg` `orig` | `di` |
 | [Overlay](https://docs.imagekit.io/features/image-transformations/overlay) | | `oi` `obg` `ofo` `ox` `oy` `oh` `ow` `oit` `ot` `ote` `otw` `otbg` `otp` `otia` `otc` `otf` `ots` `ott` `oa` |
 | [Image enhancement & color manipulation](https://docs.imagekit.io/features/image-transformations/image-enhancement-and-color-manipulation) | `e-contrast` `e-sharpen` `e-usm` | |
 
