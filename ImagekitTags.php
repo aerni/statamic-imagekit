@@ -2,8 +2,9 @@
 
 namespace Statamic\Addons\Imagekit;
 
-use Statamic\Extend\Tags;
 use Statamic\Addons\Imagekit\Validator;
+use Statamic\API\Asset;
+use Statamic\Extend\Tags;
 
 class ImagekitTags extends Tags
 {
@@ -13,7 +14,7 @@ class ImagekitTags extends Tags
      * @var array
      */
     private $imagekitApi = [
-        'w', 'h', 'ar', 'c', 'cm', 'fo', 'q', 'f', 'bl', 'e-grayscale', 'dpr', 'n', 'pr', 'lo', 't', 
+        'w', 'h', 'ar', 'c', 'cm', 'x', 'y', 'xc', 'yc', 'fo', 'q', 'f', 'bl', 'e-grayscale', 'dpr', 'n', 'pr', 'lo', 't', 
         'b', 'cp', 'md', 'rt', 'r', 'bg', 'orig', 'e-contrast', 'e-sharpen', 'e-usm'
     ];
 
@@ -23,7 +24,7 @@ class ImagekitTags extends Tags
      * @var array
      */
     private $tagAttrs = [
-        'src', 'class', 'alt', 'title', 'tag', 'domain', 'id', 'identifier'
+        'src', 'class', 'alt', 'title', 'tag', 'domain', 'id', 'identifier', 'focus'
     ];
 
     /**
@@ -88,12 +89,12 @@ class ImagekitTags extends Tags
     {
         $urlParts = [
             'endpoint' => $this->buildImagekitEndpoint(),
-            'transformation' => $this->buildImagekitTransformation(),
+            'transformation' => $this->buildImagekitTransformation($item),
             'path' => trim($item, '/')
         ];
 
         $url = implode('/', array_filter($urlParts));
-
+        
         return $url;
     }
 
@@ -134,7 +135,7 @@ class ImagekitTags extends Tags
      *
      * @return string
      */
-    private function getImagekitParams()
+    private function getImagekitParams($item)
     {
         $imagekitParams = [];
 
@@ -142,6 +143,11 @@ class ImagekitTags extends Tags
             if (!in_array($param, $this->tagAttrs)) {
                 $imagekitParams[$param] = $value;
             }
+        }
+
+        if ($this->getParam('focus')) {
+            $focus = $this->getFocus($item);
+            $imagekitParams = array_merge($imagekitParams, $focus);
         }
 
         $normalizedParams = $this->normalizeImagekitParams($imagekitParams);
@@ -160,7 +166,7 @@ class ImagekitTags extends Tags
     private function normalizeImagekitParams($imagekitParams)
     {
 
-        if (!empty($imagekitParams)) {
+        if (! empty($imagekitParams)) {
 
             foreach ($imagekitParams as $param => $value) {
 
@@ -178,13 +184,15 @@ class ImagekitTags extends Tags
                 // For use with lazysizes rias plugin
                 if ($param === 'w' && $value === 'auto') {
                     $imagekitParams['w'] = '{width}';
-                }
+                } 
 
                 // For use with lazysizes rias plugin
                 if ($param === 'q' && $value === 'auto') {
                     $imagekitParams['q'] = '{quality}';
                 }
+
             }
+
         }
 
         return $imagekitParams;
@@ -195,9 +203,8 @@ class ImagekitTags extends Tags
      *
      * @return string
      */
-    private function buildImagekitTransformation()
-    {
-        $params = $this->getImagekitParams();
+    private function buildImagekitTransformation($item) {
+        $params = $this->getImagekitParams($item);
         $paramPairs = [];
 
         if (isset($params)) {
@@ -209,11 +216,41 @@ class ImagekitTags extends Tags
                 }
             }
         }
-
+        
         $joinedParams = join(',', $paramPairs);
 
         $transformation = empty($joinedParams) ? '' : 'tr:' . $joinedParams;
 
         return $transformation;
+    }
+    
+    /**
+     * Get the focus coordinates from the asset
+     *
+     * @param string $item
+     * @return array
+     */
+    private function getFocus($item)
+    {
+        $asset = Asset::find($item);
+        $focus = $asset->get('focus');
+
+        $focusArray = [];
+
+        if ($this->getParam('focus') === 'normal') {
+            $focusArray = [
+                'x' => substr($focus, 0, 2),
+                'y' => substr($focus, -2),
+            ];
+        }; 
+        
+        if ($this->getParam('focus') === 'center') {
+            $focusArray = [
+                'xc' => substr($focus, 0, 2),
+                'yc' => substr($focus, -2),
+            ];
+        };
+
+        return $focusArray;
     }
 }
