@@ -27,8 +27,8 @@ class ImagekitTags extends Tags
      * @var array
      */
     private $imagekitApi = [
-        'w', 'h', 'ar', 'c', 'cm', 'fo', 'q', 'f', 'bl', 'dpr', 'n', 'pr', 'lo', 't',
-        'e-contrast', 'e-sharpen', 'e-usm', 'e-grayscale', 'cp', 'md', 'rt', 'r', 'bg', 'orig'
+        'w', 'h', 'ar', 'c', 'cm', 'fo', 'q', 'f', 'bl', 'e-grayscale', 'dpr', 'n', 'pr', 'lo', 't', 
+        'b', 'cp', 'md', 'rt', 'r', 'bg', 'orig', 'e-contrast', 'e-sharpen', 'e-usm'
     ];
 
     /**
