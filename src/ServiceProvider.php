@@ -11,17 +11,22 @@ class ServiceProvider extends AddonServiceProvider
         ImagekitTags::class
     ];
 
-    protected $publishables = [
-        __DIR__ . '/config/imagekit.php' => 'config/statamic/imagekit.php',
-    ];
+    public function boot()
+    {
+        parent::boot();
+
+        $this->publishes([
+            __DIR__.'/config/imagekit.php' => config_path('imagekit.php'),
+        ]);
+    }
 
     public function register()
     {
         $this->app->singleton(ImagekitTags::class, function () {
             $config = [
-                'domain' => config('statamic.imagekit.domain'),
-                'id' => config('statamic.imagekit.id'),
-                'identifier' => config('statamic.imagekit.identifier'),
+                'domain' => config('imagekit.domain'),
+                'id' => config('imagekit.id'),
+                'identifier' => config('imagekit.identifier'),
             ];
 
             return new ImagekitTags($config);
