@@ -90,13 +90,12 @@ You may pass any transformation parameters straight from the [ImageKit API](http
 
 | Category | Supported Parameters | Unsupported Parameters |
 |----------|----------------------|------------------------|
-| [Resize, crop and other transformations](https://docs.imagekit.io/features/image-transformations/resize-crop-and-other-transformations) | `w` `h` `ar` `c` `cm` `fo` `q` `f` `bl` `dpr` `n` `pr` `lo` `t` | `di` |
-| [Overlay](https://docs.imagekit.io/features/image-transformations/overlay) | | `oi` `ofo` `ox` `oy` `oh` `ow` `ot` `oit` `otc` `otf` `ots` `ott` `oa` `obg` |
-| [Image Enhancement & Color Manipulation](https://docs.imagekit.io/features/image-transformations/image-enhancement-and-color-manipulation) | `e-contrast` `e-sharpen` `e-usm` `e-grayscale` |  |
-| [Other transformations](https://docs.imagekit.io/features/image-transformations/others-transformations) | `cp` `md` `rt` `r` `bg` | `orig` |
+| [Resize, crop and other common transformations](https://docs.imagekit.io/features/image-transformations/resize-crop-and-other-transformations) | `w` `h` `ar` `c` `cm` `fo` `q` `f` `bl` `e-grayscale` `dpr` `n` `pr` `lo` `t` `cp` `md` `rt` `r` `bg` `orig` | `di` `b` |
+| [Overlay](https://docs.imagekit.io/features/image-transformations/overlay) | | `oi` `obg` `ofo` `ox` `oy` `oh` `ow` `oit` `ot` `ote` `otw` `otbg` `otp` `otia` `otc` `otf` `ots` `ott` `oa` |
+| [Image enhancement & color manipulation](https://docs.imagekit.io/features/image-transformations/image-enhancement-and-color-manipulation) | `e-contrast` `e-sharpen` `e-usm` | |
 
 ## Chained Transformations
-You can take advantage of [Chained Transformations](https://docs.imagekit.io/features/image-transformations/chained-transformations) by adding a `:` at the end of a given parameter. For example, `{{ imagekit:image w="300" h="200:" rt="90"}}` will first resize the image to 300x200 and then apply a rotation of 90 degrees.
+You can take advantage of [Chained Transformations](https://docs.imagekit.io/features/image-transformations/chained-transformations) by adding a `:` at the end of a given parameter. For example, `{{ imagekit:image w="300" h="200:" rt="90" }}` will first resize the image to 300x200 and then apply a rotation of 90 degrees.
 
 ***
 
