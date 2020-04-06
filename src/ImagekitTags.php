@@ -14,6 +14,11 @@ class ImagekitTags extends Tags
      */
     protected static $handle = 'imagekit';
 
+    /**
+     * The config array
+     *
+     * @var array
+     */
     private $config = [];
 
     /**
@@ -35,6 +40,11 @@ class ImagekitTags extends Tags
         'src', 'class', 'alt', 'title', 'tag', 'domain', 'id', 'identifier'
     ];
 
+    /**
+     * Construct the class with a config array.
+     *
+     * @param array $config
+     */
     public function __construct(array $config)
     {
         $this->config = $config;
@@ -60,7 +70,7 @@ class ImagekitTags extends Tags
     /**
      * Maps to {{ imagekit }}
      *
-     * Alternate syntax, where you pass the path as a parameter
+     * Alternate syntax, where you pass the path using the `src` parameter
      *
      * @return string
      */
@@ -147,6 +157,7 @@ class ImagekitTags extends Tags
     /**
      * Merge the addon config with the config provided on the tag
      *
+     * @param array $config. An array of the addon's config.
      * @return array
      */
     private function mergeConfig(array $config): array
@@ -225,7 +236,7 @@ class ImagekitTags extends Tags
     }
 
     /**
-     * Build a ImageKit transformation string
+     * Build an ImageKit transformation string
      *
      * @return string
      */
