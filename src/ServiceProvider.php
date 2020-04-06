@@ -5,7 +5,7 @@ namespace Aerni\Imagekit;
 use Aerni\Imagekit\ImagekitTags;
 use Statamic\Providers\AddonServiceProvider;
 
-class ImagekitServiceProvider extends AddonServiceProvider
+class ServiceProvider extends AddonServiceProvider
 {
     protected $tags = [
         ImagekitTags::class

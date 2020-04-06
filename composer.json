@@ -20,7 +20,7 @@
         },
         "laravel": {
             "providers": [
-                "Aerni\\Imagekit\\ImagekitServiceProvider"
+                "Aerni\\Imagekit\\ServiceProvider"
             ]
         }
     },
