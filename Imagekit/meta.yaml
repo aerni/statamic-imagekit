@@ -3,4 +3,4 @@ version: '1.2.0'
 description: 'Easily generate ImageKit URLs'
 url: 'https://github.com/aerni/statamic-imagekit'
 developer: 'Michael Aerni'
-developer_url: michaelaerni.ch
+developer_url: https://www.michaelaerni.ch
