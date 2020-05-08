@@ -16,7 +16,7 @@ class ServiceProvider extends AddonServiceProvider
         parent::boot();
 
         $this->publishes([
-            __DIR__.'/config/imagekit.php' => config_path('imagekit.php'),
+            __DIR__.'/../config/imagekit.php' => config_path('imagekit.php'),
         ]);
     }
 
