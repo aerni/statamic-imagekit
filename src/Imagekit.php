@@ -5,7 +5,7 @@ namespace Aerni\Imagekit;
 use Statamic\Tags\Tags;
 use Aerni\Imagekit\Validator;
 
-class ImagekitTags extends Tags
+class Imagekit extends Tags
 {
     /**
      * Set the tag handle to a custom name

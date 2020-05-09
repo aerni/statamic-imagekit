@@ -2,13 +2,12 @@
 
 namespace Aerni\Imagekit;
 
-use Aerni\Imagekit\ImagekitTags;
 use Statamic\Providers\AddonServiceProvider;
 
 class ServiceProvider extends AddonServiceProvider
 {
     protected $tags = [
-        ImagekitTags::class
+        Imagekit::class
     ];
 
     public function boot()
@@ -22,14 +21,14 @@ class ServiceProvider extends AddonServiceProvider
 
     public function register()
     {
-        $this->app->bind(ImagekitTags::class, function () {
+        $this->app->bind(Imagekit::class, function () {
             $config = [
                 'domain' => config('imagekit.domain'),
                 'id' => config('imagekit.id'),
                 'identifier' => config('imagekit.identifier'),
             ];
 
-            return new ImagekitTags($config);
+            return new Imagekit($config);
         });
     }
 }
