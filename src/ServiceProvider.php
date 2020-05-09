@@ -22,7 +22,7 @@ class ServiceProvider extends AddonServiceProvider
 
     public function register()
     {
-        $this->app->singleton(ImagekitTags::class, function () {
+        $this->app->bind(ImagekitTags::class, function () {
             $config = [
                 'domain' => config('imagekit.domain'),
                 'id' => config('imagekit.id'),
