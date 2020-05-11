@@ -1,0 +1,37 @@
+{
+    "name": "aerni/statamic-imagekit",
+    "description": "Easily generate ImageKit URLs",
+    "keywords": [
+        "statamic",
+        "imagekit"
+    ],
+    "type": "statamic-addon",
+    "homepage": "https://github.com/aerni/statamic-imagekit",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Aerni",
+            "email": "hello@michaelaerni.ch",
+            "homepage": "https://www.michaelaerni.ch",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Aerni\\Imagekit\\": "src"
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Imagekit",
+            "description": "Easily generate ImageKit URLs"
+        },
+        "laravel": {
+            "providers": [
+                "Aerni\\Imagekit\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}

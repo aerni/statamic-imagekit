@@ -1,12 +1,26 @@
 <?php
 
-namespace Statamic\Addons\Imagekit;
+namespace Aerni\Imagekit;
 
-use Statamic\Extend\Tags;
-use Statamic\Addons\Imagekit\Validator;
+use Statamic\Tags\Tags;
+use Aerni\Imagekit\Validator;
 
-class ImagekitTags extends Tags
+class Imagekit extends Tags
 {
+    /**
+     * Set the tag handle to a custom name
+     *
+     * @var string
+     */
+    protected static $handle = 'imagekit';
+
+    /**
+     * The config array
+     *
+     * @var array
+     */
+    private $config = [];
+
     /**
      * Supported ImageKit API parameters
      *
@@ -27,19 +41,28 @@ class ImagekitTags extends Tags
     ];
 
     /**
+     * Construct the class with a config array.
+     *
+     * @param array $config
+     */
+    public function __construct(array $config)
+    {
+        $this->config = $config;
+
+        Validator::validateConfig($this->config);
+    }
+
+    /**
      * Maps to {{ imagekit:field }}
      *
      * Where `field` is the variable containing the image path
      *
-     * @param $method
-     * @param $args
+     * @param string $tag
      * @return string
      */
-    public function __call($method, $args)
+    public function wildcard(string $tag): string
     {
-        $tag = explode(':', $this->tag, 2)[1];
-
-        $item = array_get($this->context, $tag);
+        $item = $this->context->get($tag);
 
         return $this->output($this->buildUrl($item));
     }
@@ -47,13 +70,13 @@ class ImagekitTags extends Tags
     /**
      * Maps to {{ imagekit }}
      *
-     * Alternate syntax, where you pass the path as a parameter
+     * Alternate syntax, where you pass the path using the `src` parameter
      *
      * @return string
      */
-    public function index()
+    public function index(): string
     {
-        $item = $this->getParam(['src']);
+        $item = $this->params->get('src');
 
         return $this->output($this->buildUrl($item));
     }
@@ -64,14 +87,14 @@ class ImagekitTags extends Tags
      * @param string $url
      * @return string
      */
-    private function output($url)
+    private function output(string $url): string
     {
         $src = "src=\"{$url}\"";
-        $class = $this->getParam('class') ? "class=\"{$this->getParam('class')}\"" : '';
-        $alt = $this->getParam('alt') ? "alt=\"{$this->getParam('alt')}\"" : "alt=\"\"";
-        $title = $this->getParam('title') ? "title=\"{$this->getParam('title')}\"" : '';
+        $class = $this->params->get('class') ? "class=\"{$this->params->get('class')}\"" : '';
+        $alt = $this->params->get('alt') ? "alt=\"{$this->params->get('alt')}\"" : "alt=\"\"";
+        $title = $this->params->get('title') ? "title=\"{$this->params->get('title')}\"" : '';
 
-        if ($this->getParam('tag')) {
+        if ($this->params->get('tag')) {
             return "<img {$src} {$class} {$alt} {$title} />";
         }
 
@@ -84,7 +107,7 @@ class ImagekitTags extends Tags
      * @param string $item. The path of the image.
      * @return string
      */
-    private function buildUrl($item)
+    private function buildUrl(string $item): string
     {
         $urlParts = [
             'endpoint' => $this->buildImagekitEndpoint(),
@@ -102,9 +125,9 @@ class ImagekitTags extends Tags
      *
      * @return string
      */
-    private function buildImagekitEndpoint()
+    private function buildImagekitEndpoint(): string
     {
-        $endpointConfig = $this->getAddonConfig();
+        $endpointConfig = $this->getConfig();
 
         $endpoint = 'https://' . implode('/', array_filter($endpointConfig));
 
@@ -112,17 +135,19 @@ class ImagekitTags extends Tags
     }
 
     /**
-     * Get the addon config
+     * Get the config from the tag
      *
-     * @return string
+     * @return array
      */
-    private function getAddonConfig()
+    private function getConfig(): array
     {
         $config = [
-            'domain' => $this->get('domain', ''),
-            'id' => $this->get('id', ''),
-            'identifier' => $this->get('identifier', '')
+            'domain' => $this->params->get('domain'),
+            'id' => $this->params->get('id'),
+            'identifier' => $this->params->get('identifier')
         ];
+
+        $config = $this->mergeConfig($config);
 
         Validator::validateConfig($config);
 
@@ -130,11 +155,31 @@ class ImagekitTags extends Tags
     }
 
     /**
+     * Merge the addon config with the config provided on the tag
+     *
+     * @param array $config. An array of the addon's config.
+     * @return array
+     */
+    private function mergeConfig(array $config): array
+    {
+        $defaultConfig = collect(array_filter($this->config));
+        $tagConfig = collect($config);
+
+        $validTagConfig = $tagConfig->filter(function ($value) {
+            return $value !== null;
+        });
+
+        $mergedConfig = $defaultConfig->merge($validTagConfig)->toArray();
+
+        return $mergedConfig;
+    }
+
+    /**
      * Get the ImageKit parameters from the tag
      *
-     * @return string
+     * @return array
      */
-    private function getImagekitParams()
+    private function getImagekitParams(): array
     {
         $imagekitParams = [];
 
@@ -155,9 +200,9 @@ class ImagekitTags extends Tags
      * Normalize the values of the ImageKit parameters
      *
      * @param array $imagekitParams. An array of ImageKit parameters.
-     * @return string
+     * @return array
      */
-    private function normalizeImagekitParams($imagekitParams)
+    private function normalizeImagekitParams(array $imagekitParams): array
     {
 
         if (!empty($imagekitParams)) {
@@ -191,18 +236,18 @@ class ImagekitTags extends Tags
     }
 
     /**
-     * Build a ImageKit transformation string
+     * Build an ImageKit transformation string
      *
      * @return string
      */
-    private function buildImagekitTransformation()
+    private function buildImagekitTransformation(): string
     {
         $params = $this->getImagekitParams();
         $paramPairs = [];
 
         if (isset($params)) {
             foreach ($params as $param => $value) {
-                if ($value === '') {
+                if (empty($value)) {
                     $paramPairs[] = $param;
                 } else {
                     $paramPairs[] = $param . "-" . $value;
