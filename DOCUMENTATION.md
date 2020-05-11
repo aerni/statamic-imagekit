@@ -1,20 +1,66 @@
 ## Installation
+Install the addon using Composer.
 
-1. Simply copy the `Imagekit` folder into `site/addons/`.
-2. Configure your default settings.
-3. Take a well deserved break.
+```bash
+composer require aerni/statamic-imagekit
+```
+
+Publish the config of the package.
+
+```bash
+php artisan vendor:publish --provider="Aerni\Imagekit\ServiceProvider"
+```
+
+The following config will be published to `config/imagekit.php`.
+
+```php
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | ImageKit Domain
+    |--------------------------------------------------------------------------
+    |
+    | The default domain to use as part of your URL Endpoint.
+    |
+    */
+
+    'domain' => env('IMAGEKIT_DOMAIN', 'ik.imagekit.io'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | ImageKit ID
+    |--------------------------------------------------------------------------
+    |
+    | The default ImageKit ID to use as part of your URL Endpoint.
+    |
+    */
+
+    'id' => env('IMAGEKIT_ID'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | ImageKit Identifier
+    |--------------------------------------------------------------------------
+    |
+    | The default identifier to use as part of your URL Endpoint.
+    |
+    */
+
+    'identifier' => env('IMAGEKIT_IDENTIFIER'),
+
+];
+```
 
 ***
 
-## Default Settings
-Head to `Configure -> Addons -> ImageKit` in the CP and configure your default settings. 
+## Configuration
+Set your configuration in your `.env` file. The values will be used to generate your URL Endpoint.
 
-> Values configured here will be saved in `site/settings/addons/imagekit.yaml`.
-
-```yaml
-domain: ik.imagekit.io
-id: starwars
-identifier: characters 
+```env
+IMAGEKIT_DOMAIN=ik.imagekit.io
+IMAGEKIT_ID=starwars
+IMAGEKIT_IDENTIFIER=characters
 ```
 
 ***
@@ -25,7 +71,7 @@ identifier: characters
 We have an asset URL saved in the YAML and want to resize the image to 300x200.
 
 ```yaml
-image: /assets/starwars/mandalorian.jpg
+image: starwars/mandalorian.jpg
 ```
 
 ```template
@@ -40,17 +86,17 @@ https://ik.imagekit.io/starwars/characters/tr:w-300,h-200/assets/starwars/mandal
 ```
 
 ### Multiple Images
-Loop over a list of asset URLs to generate ImageKit URLs for each one. Reference the URL of the current asset in the loop using `{{ value }}`.
+Loop over a list of asset URLs to generate ImageKit URLs for each one. Reference the URL of the current asset in the loop using `{{ url }}`.
 
 ```yaml
 images:
-  - /assets/starwars/mandalorian.jpg
-  - /assets/starwars/baby-yoda.jpg
+  - starwars/mandalorian.jpg
+  - starwars/baby-yoda.jpg
 ```
 
 ```template
 {{ images }}
-  {{ imagekit:value w="300" h="200" }}
+  {{ imagekit:url w="300" h="200" }}
 {{ /images }}
 ```
 
@@ -75,7 +121,7 @@ Pass the following parameters to generate the respective HTML attribute.
 ***
 
 ## Settings Parameters
-You may want to override the default addon settings for a specific image. You can do this with the following parameters. *Note: Using an empty string will remove the default setting.*
+You may want to override the default addon configuration for a specific image. You can do this with the following parameters. *Note: Using an empty string will remove the default setting.*
 
 | Name | Type | Description |
 |------|------|-------------|
