@@ -7,8 +7,7 @@ return [
     | ImageKit Domain
     |--------------------------------------------------------------------------
     |
-    | The domain that will be used as the root of your image manipulations.
-    | If you don’t opt for a custom domain name, this defaults to ik.imagekit.io.
+    | The default domain to use as part of your URL Endpoint.
     |
     */
 
@@ -19,8 +18,7 @@ return [
     | ImageKit ID
     |--------------------------------------------------------------------------
     |
-    | Your ImageKit ID is a unique identifier for your account. 
-    | If you don’t opt for a custom domain name, your ImageKit ID will become part of your image URLs.
+    | The default ImageKit ID to use as part of your URL Endpoint.
     |
     */
 
@@ -28,10 +26,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | ImageKit Endpoint Identifier
+    | ImageKit Identifier
     |--------------------------------------------------------------------------
     |
-    | The identifier of your endpoint. This will become part of your image URLs.
+    | The default identifier to use as part of your URL Endpoint.
     |
     */
 
