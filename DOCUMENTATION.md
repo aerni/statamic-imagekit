@@ -14,8 +14,12 @@ Head to `Configure -> Addons -> ImageKit` in the CP and configure your default s
 ```yaml
 domain: ik.imagekit.io
 id: starwars
-identifier: characters 
+identifier: characters
+debug: false
 ```
+
+### Debug Mode
+Set `debug: true` to make the `{{ imagekit }}` tag output the original image path instead of the ImageKit URL. This might come in handy when developing locally without an internet connection or if your machine isn’t setup for [local testing](https://docs.imagekit.io/integration/testing).
 
 ***
 
@@ -75,13 +79,16 @@ Pass the following parameters to generate the respective HTML attribute.
 ***
 
 ## Settings Parameters
-You may want to override the default addon settings for a specific image. You can do this with the following parameters. *Note: Using an empty string will remove the default setting.*
+You may want to override the default addon settings for a specific image. You can do this with the following parameters.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `domain` | String | Override the default `domain`. |
-| `id` | String | Override the default `id`. |
-| `identifier` | String | Override the default `identifier`. |
+| `domain` | String | Override the default `domain` setting. |
+| `id` | String | Override the default `id` setting. |
+| `identifier` | String | Override the default `identifier` setting. |
+| `debug` | Boolean | Override the default `debug` setting. |
+
+> Passing an empty string to `domain`, `id` or `identifier` will remove the default setting.
 
 ***
 

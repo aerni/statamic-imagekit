@@ -6,3 +6,5 @@ fields:
     type: text
   identifier:
     type: text
+  debug:
+    type: toggle

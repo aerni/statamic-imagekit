@@ -23,7 +23,7 @@ class ImagekitTags extends Tags
      * @var array
      */
     private $tagAttrs = [
-        'src', 'class', 'alt', 'title', 'tag', 'domain', 'id', 'identifier'
+        'src', 'class', 'alt', 'title', 'tag', 'domain', 'id', 'identifier', 'debug'
     ];
 
     /**
@@ -86,6 +86,10 @@ class ImagekitTags extends Tags
      */
     private function buildUrl($item)
     {
+        if ($this->isDebugMode()) {
+            return $item;
+        }
+
         $urlParts = [
             'endpoint' => $this->buildImagekitEndpoint(),
             'transformation' => $this->buildImagekitTransformation(),
@@ -215,5 +219,19 @@ class ImagekitTags extends Tags
         $transformation = empty($joinedParams) ? '' : 'tr:' . $joinedParams;
 
         return $transformation;
+    }
+
+    /**
+     * Check if debug mode is enabled
+     *
+     * @return bool
+     */
+    private function isDebugMode()
+    {
+        if (!$this->getBool('debug', false)) {
+            return false;
+        }
+
+        return true;
     }
 }
