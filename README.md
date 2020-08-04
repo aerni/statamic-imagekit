@@ -4,7 +4,7 @@
 
 ## Documentation
 
-[Read the documentation](https://github.com/aerni/statamic-imagekit/blob/statamic-v3/DOCUMENTATION.md) to learn how to use this addon and for a list of available options and transformation parameters.
+[Read the documentation](https://statamic.com/addons/aerni/imagekit/docs) to learn how to use this addon and for a list of available options and transformation parameters.
 
 ## About ImageKit
 
