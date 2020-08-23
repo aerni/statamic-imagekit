@@ -183,7 +183,7 @@ class Imagekit extends Tags
     {
         $imagekitParams = [];
 
-        foreach ($this->parameters as $param => $value) {
+        foreach ($this->params as $param => $value) {
             if (!in_array($param, $this->tagAttrs)) {
                 $imagekitParams[$param] = $value;
             }
