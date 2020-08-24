@@ -21,6 +21,8 @@ class ServiceProvider extends AddonServiceProvider
 
     public function register()
     {
+        parent::register();
+
         $this->app->bind(Imagekit::class, function () {
             $config = [
                 'domain' => config('imagekit.domain'),
