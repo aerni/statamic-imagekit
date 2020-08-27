@@ -1,5 +1,5 @@
 {
-    "name": "aerni/statamic-imagekit",
+    "name": "aerni/imagekit",
     "description": "Easily generate ImageKit URLs",
     "keywords": [
         "statamic",
