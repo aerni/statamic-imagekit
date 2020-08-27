@@ -20,6 +20,11 @@
             "Aerni\\Imagekit\\": "src"
         }
     },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
     "extra": {
         "statamic": {
             "name": "Imagekit",
@@ -32,5 +37,5 @@
         }
     },
     "minimum-stability": "dev",
-    "require": {}
+    "prefer-stable": true
 }
