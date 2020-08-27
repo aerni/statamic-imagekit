@@ -107,6 +107,32 @@ https://ik.imagekit.io/starwars/characters/tr:w-300,h-200/assets/starwars/baby-y
 
 ***
 
+## Focal Point
+Use Statamic's Focal Point feature to automatically add the `xc` and `yc` parameter to the image.
+
+**Image Meta Yaml:**
+```yaml
+data:
+  focus: 50-85-1
+width: 2090
+height: 3000
+
+```
+
+**Template:**
+```template
+{{ imagekit:image w="500" h="200" cm="extract" }}
+```
+
+**Output:**
+```output
+https://ik.imagekit.io/starwars/characters/tr:xc-1045,yc-2550,w-500,h-200,cm-extract/assets/starwars/mandalorian.jpg
+```
+
+>**Note:** As of now, ImageKit only supports custom coordinates in combination with the `cm-extract` parameter.
+
+***
+
 ## HTML Attributes
 Pass the following parameters to generate the respective HTML attribute.
 
