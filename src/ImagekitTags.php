@@ -4,8 +4,12 @@ namespace Aerni\Imagekit;
 
 use Statamic\Tags\Tags;
 use Aerni\Imagekit\Validator;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
+use Statamic\Facades\Asset;
 
-class Imagekit extends Tags
+class ImagekitTags extends Tags
 {
     /**
      * Set the tag handle to a custom name
@@ -19,15 +23,15 @@ class Imagekit extends Tags
      *
      * @var array
      */
-    private $config = [];
+    protected $config = [];
 
     /**
      * Supported ImageKit API parameters
      *
      * @var array
      */
-    private $imagekitApi = [
-        'w', 'h', 'ar', 'c', 'cm', 'fo', 'q', 'f', 'bl', 'e-grayscale', 'dpr', 'n', 'pr', 'lo', 't', 
+    protected $imagekitApi = [
+        'w', 'h', 'ar', 'c', 'cm', 'x', 'y', 'xc', 'yc', 'fo', 'q', 'f', 'bl', 'e-grayscale', 'dpr', 'n', 'pr', 'lo', 't',
         'b', 'cp', 'md', 'rt', 'r', 'bg', 'orig', 'e-contrast', 'e-sharpen', 'e-usm'
     ];
 
@@ -36,7 +40,7 @@ class Imagekit extends Tags
      *
      * @var array
      */
-    private $tagAttrs = [
+    protected $tagAttrs = [
         'src', 'class', 'alt', 'title', 'tag', 'domain', 'id', 'identifier'
     ];
 
@@ -87,7 +91,7 @@ class Imagekit extends Tags
      * @param string $url
      * @return string
      */
-    private function output(string $url): string
+    protected function output(string $url): string
     {
         $src = "src=\"{$url}\"";
         $class = $this->params->get('class') ? "class=\"{$this->params->get('class')}\"" : '';
@@ -102,12 +106,73 @@ class Imagekit extends Tags
     }
 
     /**
+     * Calulcate the absolute position based on a value and percentage.
+     *
+     * @param string $value
+     * @param string $percentage
+     * @return string
+     */
+    protected function calcAbsolutePosition(string $value, string $percentage): string
+    {
+        return $value / 100 * $percentage;
+    }
+
+    /**
+     * Returns an array of focal point values.
+     *
+     * @return array
+     */
+    protected function focus(): array
+    {
+        $asset = $this->asset();
+        $data = $asset->data();
+        $meta = $asset->meta();
+
+        if (! $this->canCalculateFocalPoint($data)) {
+            return [];
+        }
+
+        $x = Str::before($data['focus'], '-');
+        $y = Str::between($data['focus'], '-', '-');
+
+        return [
+            'xc' => $this->calcAbsolutePosition($meta['width'], $x),
+            'yc' => $this->calcAbsolutePosition($meta['height'], $y),
+        ];
+    }
+
+    /**
+     * Check if it can calculate a focal point.
+     *
+     * @param Collection $data
+     * @return bool
+     */
+    protected function canCalculateFocalPoint(Collection $data): bool
+    {
+        if (! Arr::exists($data, 'focus')) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns the asset from the context.
+     *
+     * @return \Statamic\Assets\Asset
+     */
+    protected function asset(): \Statamic\Assets\Asset
+    {
+        return Asset::findById($this->context->get('id'));
+    }
+
+    /**
      * Build the final ImageKit URL
      *
      * @param string $item. The path of the image.
      * @return string
      */
-    private function buildUrl(string $item): string
+    protected function buildUrl(string $item): string
     {
         $urlParts = [
             'endpoint' => $this->buildImagekitEndpoint(),
@@ -125,7 +190,7 @@ class Imagekit extends Tags
      *
      * @return string
      */
-    private function buildImagekitEndpoint(): string
+    protected function buildImagekitEndpoint(): string
     {
         $endpointConfig = $this->getConfig();
 
@@ -139,7 +204,7 @@ class Imagekit extends Tags
      *
      * @return array
      */
-    private function getConfig(): array
+    protected function getConfig(): array
     {
         $config = [
             'domain' => $this->params->get('domain'),
@@ -160,7 +225,7 @@ class Imagekit extends Tags
      * @param array $config. An array of the addon's config.
      * @return array
      */
-    private function mergeConfig(array $config): array
+    protected function mergeConfig(array $config): array
     {
         $defaultConfig = collect(array_filter($this->config));
         $tagConfig = collect($config);
@@ -179,9 +244,9 @@ class Imagekit extends Tags
      *
      * @return array
      */
-    private function getImagekitParams(): array
+    protected function getImagekitParams(): array
     {
-        $imagekitParams = [];
+        $imagekitParams = array_merge([], $this->focus());
 
         foreach ($this->params as $param => $value) {
             if (!in_array($param, $this->tagAttrs)) {
@@ -202,11 +267,9 @@ class Imagekit extends Tags
      * @param array $imagekitParams. An array of ImageKit parameters.
      * @return array
      */
-    private function normalizeImagekitParams(array $imagekitParams): array
+    protected function normalizeImagekitParams(array $imagekitParams): array
     {
-
         if (!empty($imagekitParams)) {
-
             foreach ($imagekitParams as $param => $value) {
 
                 // Remove empty spaces from parameter values
@@ -240,7 +303,7 @@ class Imagekit extends Tags
      *
      * @return string
      */
-    private function buildImagekitTransformation(): string
+    protected function buildImagekitTransformation(): string
     {
         $params = $this->getImagekitParams();
         $paramPairs = [];
