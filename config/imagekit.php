@@ -35,4 +35,16 @@ return [
 
     'identifier' => env('IMAGEKIT_IDENTIFIER'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Bypass ImageKit
+    |--------------------------------------------------------------------------
+    |
+    | You can bypass ImageKit to load the images from the regular path.
+    | This is useful for local development.
+    |
+    */
+
+    'bypass' => env('IMAGEKIT_BYPASS', false),
+
 ];

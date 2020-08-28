@@ -17,12 +17,6 @@ class Validator
     {
         extract($config);
 
-        foreach ($config as $param => $value) {
-            if (isset($value) && !is_string($value)) {
-                throw new Exception("The value of [{$param}] must be a string. Please check your config.");
-            }
-        }
-
         if (empty($domain)) {
             throw new Exception("The value of [domain] can not be empty. Please provide a valid domain in the config or on the tag, e.g. \"ik.imagekit.io\".");
         }

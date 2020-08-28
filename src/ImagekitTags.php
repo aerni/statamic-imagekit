@@ -41,7 +41,7 @@ class ImagekitTags extends Tags
      * @var array
      */
     protected $tagAttrs = [
-        'src', 'class', 'alt', 'title', 'tag', 'domain', 'id', 'identifier'
+        'src', 'class', 'alt', 'title', 'tag', 'domain', 'id', 'identifier', 'bypass'
     ];
 
     /**
@@ -174,6 +174,10 @@ class ImagekitTags extends Tags
      */
     protected function buildUrl(string $item): string
     {
+        if ($this->shouldBypassImagekit()) {
+            return $item;
+        }
+
         $urlParts = [
             'endpoint' => $this->buildImagekitEndpoint(),
             'transformation' => $this->buildImagekitTransformation(),
@@ -323,5 +327,19 @@ class ImagekitTags extends Tags
         $transformation = empty($joinedParams) ? '' : 'tr:' . $joinedParams;
 
         return $transformation;
+    }
+
+    /**
+     * Check if it should bypass ImageKit.
+     *
+     * @return bool
+     */
+    protected function shouldBypassImagekit(): bool
+    {
+        if ($this->params->has('bypass')) {
+            return $this->params->bool('bypass');
+        };
+
+        return $this->config['bypass'];
     }
 }

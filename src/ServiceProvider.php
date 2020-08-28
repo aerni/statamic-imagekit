@@ -19,6 +19,7 @@ class ServiceProvider extends AddonServiceProvider
                 'domain' => config('imagekit.domain'),
                 'id' => config('imagekit.id'),
                 'identifier' => config('imagekit.identifier'),
+                'bypass' => config('imagekit.bypass'),
             ]);
         });
     }

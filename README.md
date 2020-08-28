@@ -1,4 +1,6 @@
-# ImageKit ![Statamic](https://flat.badgen.net/badge/Statamic/3.0+/FF269E)
+# ImageKit
+
+![Statamic](https://flat.badgen.net/badge/Statamic/3.0+/FF269E)
 
 > This addon provides an easy way to generate ImageKit URLs
 
